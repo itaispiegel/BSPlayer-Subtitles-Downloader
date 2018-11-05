@@ -53,11 +53,12 @@ class BSPlayer:
         sub_domain = random.choice(cls.SUB_DOMAINS)
         return cls.API_URL_TEMPLATE.format(sub_domain=sub_domain)
 
-    def __init__(self, search_url=None, timeout=None, verbose=False):
+    def __init__(self, search_url=None, timeout=None, tries=5, verbose=False):
         self.search_url = search_url or self.get_sub_domain()
         self.token = None
         self.logger = logbook.Logger('BSPlayerLogger')
-        self.timeout = timeout
+        self.tries = tries
+        self.timeout = timeout / tries
 
         if verbose:
             self.logger.handlers.append(logbook.StreamHandler(sys.stdout))
@@ -69,7 +70,7 @@ class BSPlayer:
     def __exit__(self, exc_type, exc_val, exc_tb):
         return self.logout()
 
-    def api_request(self, func_name, params='', tries=5):
+    def api_request(self, func_name, params=''):
         soap_action_header = f'"http://api.bsplayer-subtitles.com/v1.php#{func_name}"'
         headers = self.HEADERS.copy()
         headers['SOAPAction'] = soap_action_header
@@ -77,7 +78,7 @@ class BSPlayer:
         data = self.DATA_FORMAT.format(search_url=self.search_url, func_name=func_name, params=params)
 
         self.logger.info(f'Sending request: {func_name}')
-        for i in range(tries):
+        for i in range(self.tries):
             try:
                 self.logger.info(f'Try number {i} for operation {func_name}')
                 res = requests.post(self.search_url, data=data, headers=headers, timeout=self.timeout)
@@ -85,7 +86,7 @@ class BSPlayer:
             except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, TimeoutError, ConnectionError):
                 self.logger.exception()
 
-        self.logger.error(f'Too many tries {tries}')
+        self.logger.error(f'Too many tries {self.tries}')
         raise TooManyTriesError(func_name)
 
     def login(self):

@@ -10,7 +10,7 @@ from bsplayer.exceptions import SubtitlesNotFoundException, TooManyTriesError
 @click.command()
 @click.argument('video_path_glob')
 @click.option('-d', '--dest-directory', help='The directory to download the subtitles to')
-@click.option('-t', '--timeout', help='Timeout for downloading each file', type=float)
+@click.option('-t', '--timeout', help='Timeout for downloading each file', default=5.0, type=float)
 @click.option('-v', '--verbose', help='Verbose output', is_flag=True, default=False)
 @click.option('-W', '--no-wildcard', help="Don't treat the video path as a wildcard", is_flag=True)
 def download(video_path_glob, dest_directory, timeout, verbose, no_wildcard):

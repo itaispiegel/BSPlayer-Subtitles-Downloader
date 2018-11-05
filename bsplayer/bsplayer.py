@@ -53,7 +53,7 @@ class BSPlayer:
         sub_domain = random.choice(cls.SUB_DOMAINS)
         return cls.API_URL_TEMPLATE.format(sub_domain=sub_domain)
 
-    def __init__(self, search_url=None, timeout=5.0, verbose=False):
+    def __init__(self, search_url=None, timeout=None, verbose=False):
         self.search_url = search_url or self.get_sub_domain()
         self.token = None
         self.logger = logbook.Logger('BSPlayerLogger')

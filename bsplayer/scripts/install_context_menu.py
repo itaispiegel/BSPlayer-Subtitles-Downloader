@@ -29,7 +29,7 @@ class BSPlayerRegistryInstaller:
     BSPLAYER_KEY_REGEX = re.compile(r"BSPlayerFile\.[A-Z].*?")
     REGISTRY_HIVE = winreg.HKEY_CLASSES_ROOT
     CONTEXT_MENU_TITLE = 'Download Subtitles'
-    CONTEXT_MENU_COMMAND_FORMAT = '{python_executable} -m bsplayer.scripts.download_subtitles.py %1'
+    CONTEXT_MENU_COMMAND_FORMAT = '{python_executable} -m bsplayer.scripts.download_subtitles %1'
 
     def __init__(self, python_executable):
         self.python_executable = python_executable
@@ -78,7 +78,7 @@ class BSPlayerRegistryInstaller:
 @require_windows
 @require_elevation
 @click.command()
-@click.option('-p', '--python-executable', help='Python executable to use', default='C:\\Python36\\python.exe')
+@click.option('-p', '--python-executable', help='Python executable to use', default='C:\\Python36\\pythonw.exe')
 def install(python_executable):
     installer = BSPlayerRegistryInstaller(python_executable)
     installer.install()

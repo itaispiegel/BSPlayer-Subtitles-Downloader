@@ -30,7 +30,7 @@ class BSPlayer:
     API_URL_TEMPLATE = "http://{sub_domain}.api.bsplayer-subtitles.com/v1.php"
 
     HEADERS = {
-        'User-Agent': 'BSPlayer/2.x (1022.12360)',
+        'User-Agent': 'BSPlayer/2.x (1022.12362)',
         'Content-Type': 'text/xml; charset=utf-8',
         'Connection': 'close',
     }
@@ -132,7 +132,7 @@ class BSPlayer:
                 f'Searching for subtitles of path={video_path} size={video_info.size} hash={video_info.hash}')
             root = self.api_request(func_name='searchSubtitles', params=(
                 f'<handle>{self.token}</handle>'
-                f'<videoHash>{video_info.hash}</videoHash>'
+                f'<movieHash>{video_info.hash}</movieHash>'
                 f'<languageId>{language_ids}</languageId>'
                 f'<imdbId>*</imdbId>'
             ))

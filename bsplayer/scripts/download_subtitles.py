@@ -11,9 +11,10 @@ from bsplayer.exceptions import SubtitlesNotFoundException, TooManyTriesError
 @click.argument('video_path_glob')
 @click.option('-d', '--dest-directory', help='The directory to download the subtitles to')
 @click.option('-t', '--timeout', help='Timeout for downloading each file', default=5.0, type=float)
+@click.option('-T', '--tries', help='Amount of tries to the try the request against the server', default=5, type=int)
 @click.option('-v', '--verbose', help='Verbose output', is_flag=True, default=False)
 @click.option('-W', '--no-wildcard', help="Don't treat the video path as a wildcard", is_flag=True)
-def download(video_path_glob, dest_directory, timeout, verbose, no_wildcard):
+def download(video_path_glob, dest_directory, timeout, tries, verbose, no_wildcard):
     video_files = [video_path_glob]
     if not no_wildcard:
         video_files = glob.glob(video_path_glob)
@@ -21,7 +22,7 @@ def download(video_path_glob, dest_directory, timeout, verbose, no_wildcard):
         sys.exit('ERROR: No files matched')
 
     try:
-        with BSPlayer(timeout=timeout, verbose=verbose) as bsplayer:
+        with BSPlayer(timeout=timeout, tries=tries, verbose=verbose) as bsplayer:
             for video_path in video_files:
                 bsplayer.download_by_path(video_path, dest_directory)
     except SubtitlesNotFoundException:

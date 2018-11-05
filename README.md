@@ -7,8 +7,8 @@ To do that, I usually open each video file at a time using BSPlayer, wait for th
 This method is really time consuming, and I just knew that I could do better.
 
 Ladies and gentlemen, I'm proud to present you the "BSPlayer Subtitles Downloader"!
-This is a script that receives the video file path, and simply downloads the subtitles for it just like BSPlayer does.
-Behind the scenes, the script uses a nice Python API I implemented to interact with the BSPlayer subtitles server.
+This is a tools that receives the video file path, and simply downloads the subtitles for it just like BSPlayer does.
+Behind the scenes, the tool uses a nice Python API I implemented to interact with the BSPlayer subtitles server.
 I implemented this API by analyzing the HTTP requests BSPlayer was making to the subtitles server, using Wireshark. I also got a little help from the nice repository I found: `service.subtitles.bsplayer`.
 
 I also wrote a script that adds a nice Windows context menu button, which allows you to right click for `Download Subtitles`.

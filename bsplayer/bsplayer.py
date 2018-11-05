@@ -158,7 +158,8 @@ class BSPlayer:
     @BSPlayerDecorators.requires_login
     def download_by_path(self, video_path, dest_directory=None, language_ids='eng,eng'):
         if dest_directory is None:
-            dest_directory = os.path.join(os.path.dirname(video_path))
+            dest_directory = os.path.join(os.path.dirname(video_path), self.SUBS_DIRECTORY_NAME)
+        os.makedirs(dest_directory, exist_ok=True)
         self.logger.info(f'Downloading subtitles for file {video_path}, storing at directory {dest_directory}')
 
         subtitles = self.search_subtitles(video_path, language_ids)

@@ -20,14 +20,14 @@ def download(video_path_glob, dest_directory, timeout, verbose, no_wildcard):
     if not video_files:
         sys.exit('ERROR: No files matched')
 
-    for video_path in video_files:
+    try:
         with BSPlayer(timeout=timeout, verbose=verbose) as bsplayer:
-            try:
+            for video_path in video_files:
                 bsplayer.download_by_path(video_path, dest_directory)
-            except SubtitlesNotFoundException:
-                print(f'ERROR: Subtitles not found for {video_path}', file=sys.stderr)
-            except TooManyTriesError:
-                print(f'ERROR: Request failed', file=sys.stderr)
+    except SubtitlesNotFoundException:
+        print(f'ERROR: Subtitles not found for {video_path}', file=sys.stderr)
+    except TooManyTriesError:
+        print(f'ERROR: Request failed - too many tries', file=sys.stderr)
 
 
 if __name__ == '__main__':

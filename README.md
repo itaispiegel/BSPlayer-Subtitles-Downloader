@@ -15,6 +15,8 @@ I also wrote a script that adds a nice Windows context menu button, which allows
 
 The API is completely open source, so feel free to use it :)
 
+This library requires Python 3.6 or higher.
+
 ### External Links:
 - http://bsplayer.com/
 - https://github.com/realgam3/service.subtitles.bsplayer

@@ -17,6 +17,21 @@ The API is completely open source, so feel free to use it :)
 
 This library requires Python 3.6 or higher.
 
+## Usage
+To use this you must install Python (3.8 is preferred).
+You can install it from the following link: https://www.python.org/downloads/.
+After Python is installed, execute the following commands:
+```bash
+git clone https://github.com/itaispiegel/BSPlayer-Subtitles-Downloader.git
+cd BSPlayer-Subtitles-Downloader
+python setup.py install
+python -m bsplayer.scripts.install_context_menu
+```
+After executing the commands, you can finally execute `download_subtitles` to simply download subtitles for a given video or you can use the right click added to the Windows Explorer context menu.
+
+For any following questions, please feel free to send me a private message or email at:
+<itai.spiegel@gmail.com>
+
 ### External Links:
 - http://bsplayer.com/
 - https://github.com/realgam3/service.subtitles.bsplayer

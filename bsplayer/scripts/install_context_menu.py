@@ -1,10 +1,14 @@
 import ctypes
+import os
 import platform
 import re
+import string
 import sys
 import winreg
 
 import click
+
+PYTHONW_EXECUTABLE = os.path.join(os.path.dirname(sys.executable), 'pythonw.exe')
 
 
 def require_windows(func):
@@ -29,7 +33,7 @@ class BSPlayerRegistryInstaller:
     BSPLAYER_KEY_REGEX = re.compile(r"BSPlayerFile\.[A-Z].*?")
     REGISTRY_HIVE = winreg.HKEY_CLASSES_ROOT
     CONTEXT_MENU_TITLE = 'Download Subtitles'
-    CONTEXT_MENU_COMMAND_FORMAT = '{python_executable} -m bsplayer.scripts.download_subtitles %1'
+    CONTEXT_MENU_COMMAND_TEMPLATE = string.Template('${python_executable} -m bsplayer.scripts.download_subtitles "%1"')
 
     def __init__(self, python_executable):
         self.python_executable = python_executable
@@ -72,13 +76,14 @@ class BSPlayerRegistryInstaller:
         bsplayer_subkeys_names = self._get_bsplayer_subkey_names_for_file_extensions()
         for key_name in bsplayer_subkeys_names:
             self.create_new_command(key_name, self.CONTEXT_MENU_TITLE,
-                                    self.CONTEXT_MENU_COMMAND_FORMAT.format(python_executable=self.python_executable))
+                                    self.CONTEXT_MENU_COMMAND_TEMPLATE.substitute(
+                                        python_executable=self.python_executable))
 
 
 @require_windows
 @require_elevation
 @click.command()
-@click.option('-p', '--python-executable', help='Python executable to use', default='C:\\Python36\\pythonw.exe')
+@click.option('-p', '--python-executable', help='Python executable to use', default=PYTHONW_EXECUTABLE)
 def install(python_executable):
     installer = BSPlayerRegistryInstaller(python_executable)
     installer.install()

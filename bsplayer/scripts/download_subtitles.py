@@ -16,7 +16,7 @@ from bsplayer.exceptions import SubtitlesNotFoundException, TooManyTriesError
 @click.option('-T', '--tries', help='Amount of tries to the try the request against the server', default=5, type=int)
 @click.option('-v', '--verbose', help='Verbose output', is_flag=True, default=False)
 @click.option('-W', '--no-wildcard', help="Don't treat the video path as a wildcard", is_flag=True)
-def download(video_path_glob, dest_directory, language, timeout, tries, verbose, no_wildcard):
+def main(video_path_glob, dest_directory, language, timeout, tries, verbose, no_wildcard):
     video_files = [video_path_glob]
     if not no_wildcard:
         video_files = glob.glob(video_path_glob)
@@ -36,4 +36,4 @@ def download(video_path_glob, dest_directory, language, timeout, tries, verbose,
 
 
 if __name__ == '__main__':
-    download()
+    main()

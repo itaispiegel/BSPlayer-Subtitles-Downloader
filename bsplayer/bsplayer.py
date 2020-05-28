@@ -82,7 +82,7 @@ class BSPlayer:
             try:
                 self.logger.info(f'Try number {i} for operation {func_name}')
                 res = requests.post(self.search_url, data=data, headers=headers, timeout=self.timeout)
-                return ElementTree.fromstring(res.content)
+                return ElementTree.fromstring(res.content.strip())
             except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, TimeoutError, ConnectionError):
                 self.logger.exception()
 
